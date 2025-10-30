@@ -182,7 +182,7 @@ Em uma arquitetura de microsserviços, a comunicação entre os componentes é u
 
 Este diagrama ilustra o fluxo de comunicação síncrona e assíncrona entre os componentes principais do FoodExpress.
 
-<img src="images/comunicação.png" alt="Estruturação do repositório" width="500">
+<img src="images/comunicacao.png" alt="Estruturação do repositório" width="500">
 
 ---
 
