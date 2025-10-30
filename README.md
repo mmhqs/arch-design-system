@@ -60,8 +60,11 @@ Feedback:
 Mistura uma fonte mais "artesanal" para títulos com uma legível e moderna para o corpo do texto.
 
 - Fonte de Títulos (Display): `Handlee` (ou similar) - Uma fonte com um toque de "escrita à mão" para títulos de seções, promoções e o logo. Transmite a personalização e o cuidado artesanal.
+<img src="images/imagem3.png" alt="Display" width="400">
 
 - Fonte de Corpo (Body/Text): `Inter` ou `Roboto` - Fontes sans-serif modernas, limpas e altamente legíveis para o corpo do texto, descrições de produtos, botões e formulários. Garante profissionalismo e boa leitura em qualquer tamanho.
+
+<img src="images/imagem4.png" alt="Body" width="400">
 
 ## 2.5. Ícones
 Estilo: Ícones de linha, com um toque levemente arredondado, sem serem excessivamente "flat". Podem ter um preenchimento sutil quando em estado ativo. Remetem a um desenho feito à mão.
@@ -69,46 +72,55 @@ Estilo: Ícones de linha, com um toque levemente arredondado, sem serem excessiv
 Conteúdo: Ícones relacionados a comida (pizza, fatia, garfo, faca), entrega (moto, caixa), usuário (chapéu de chef, cliente feliz), e navegação padrão (carrinho, home, configurações).
 
 ## 2.6. Componentes essenciais
-a) Botões (<Button>):
+a) Botões (`<Button>`):
 - Estilo: Levemente arredondados, não totalmente retos. Sombra sutil ao passar o mouse (hover) para dar profundidade.
 
-b) Cards (<Card>):
+b) Cards (`<Card>`):
 - Estilo: Borda arredondada (raio de 8-12px), com uma sombra discreta para dar a sensação de que flutua levemente. Fundo Pedra_Clara.
 - Uso: Para itens do cardápio, promoções, informações de contato.
 
-c) Inputs de Formulário (<Input>, <Select>, <Textarea>):
+c) Inputs de Formulário (`<Input>`, `<Select>`, `<Textarea>`):
 - Estilo: Borda suave (Pedra_Média), levemente arredondada, com fundo Pedra_Clara. Ao focar (focus), a borda pode mudar para Humm_Red ou Queijo_Amarelo para indicar o campo ativo.
 - Validação: Borda Pimenta_Vermelha para erro, Manjericão_Sucesso para sucesso.
 - Labels: Acima do campo, em Pedra_Escura.
 
-d) Mensagens de Feedback/Alertas (<Alert>):
+d) Mensagens de Feedback/Alertas (`<Alert>`):
 - Estilo: Retângulo com bordas arredondadas, ícone correspondente à esquerda (sucesso, erro, aviso) e texto em Pedra_Escura.
 - Cores de Fundo: Manjericão_Sucesso (verde), Pimenta_Vermelha (vermelho), Aviso_Cheddar (laranja) - com uma opacidade para não ser muito forte, ou em tons mais pastéis dessas cores.
 
-e) Navegação (<NavLink>, <Tabs>):
+e) Navegação (`<NavLink>`, `<Tabs>)`:
 - Estilo: Link de navegação (Pedra_Escura). Ao passar o mouse (hover), underline sutil ou mudança para Humm_Red. Item ativo com Humm_Red e talvez um marcador discreto.
 - Uso: Menu principal (categorias), abas de perfil do usuário.
 
 ## 3. Estilo arquitetural
+Em breve!
 
 ---
 
 ## 4. Componentização e domínio
+Em breve!
+
 ---
 
 ## 5. Padrões de comunicação
+Em breve! 
+
 ---
 
 ## 6. Persistência e banco de dados
+Em breve!
 
 ---
 
 ## 7. Escalabilidade e performance
+Em breve!
 
 ---
 
 ## Segurança
+Em breve!
 
 ---
 
 ## Observabilidade
+Em breve!
