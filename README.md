@@ -1,18 +1,23 @@
 # Design System ⚙️
-No presente repositório, é apresentada uma proposta de Design System para um sistema. Um Design System (DS) estabelece a consistência da interface, atuando como uma "fábrica de componentes" que garante uma experiência de usuário unificada e acelera a entrega de novas funcionalidades. 
+
+No presente repositório, é apresentada uma proposta de Design System para um sistema. Um Design System (DS) estabelece a consistência da interface, atuando como uma "fábrica de componentes" que garante uma experiência de usuário unificada e acelera a entrega de novas funcionalidades.
 
 Vale destacar que o DS é apenas a "carroceria" profissional do carro; ele depende de uma arquitetura de software funcional e eficiente para ser o "motor". Se a arquitetura (APIs, banco de dados, serviços) for lenta ou mal estruturada, o resultado será um aplicativo que não suporta a carga de pedidos, falha no checkout ou demora para carregar o cardápio. Portanto, a arquitetura eficiente garante que o sistema escale em performance, enquanto o Design System garante que ele escale em produto e experiência, permitindo ao sistema crescer de forma rápida e robusta.
 
-Grupo: 
-- Érica
-- Gustavo Campos
-- Gustavo Ceolin
+Grupo:
+
+- Erica Alves dos Santos
 - Joana Morais
-- Kayler
-- Luís Miguel
+- Gustavo Ceolin Silva Veloso
+- Gustavo Pimentel Carvalho Costa
+- João Pedro Aguiar do Prado
+- João Pedro Campos De Barcelos
+- Kayler de Freitas Moura
+- Luís Miguel Souza Almeida
 - Mariana Almeida Henriques
 
 ## 1. Contexto do sistema
+
 O **Pizza Delivery** nasceu como um projeto familiar, onde a simplicidade era refletidos em um site direto e funcional, pensado para os clientes do bairro. No entanto, o sucesso da receita foi além das expectativas, e a plataforma sofreu um crescimento explosivo, trazendo um desafio de escalabilidade que a arquitetura original não suportava.
 
 <img src="images/imagem1.png" alt="Pizza Delivery" width="500">
@@ -20,9 +25,11 @@ O **Pizza Delivery** nasceu como um projeto familiar, onde a simplicidade era re
 Uma nova arquitetura foi pensada para o sistema, de modo a atender os desafios apresentados. No entando, do ponto de vista de design, esse crescimento acelerado resultou em uma "colcha de retalhos". A experiência do usuário tornou-se inconsistente, com botões, fluxos de checkout e alertas visuais diferentes a cada tela, confundindo clientes fiéis e novos. O que era um charme caseiro virou um gargalo de desenvolvimento, tornando a manutenção lenta e a expansão da marca impossível, evidenciando a necessidade crítica de um Design System para unificar e profissionalizar a plataforma.
 
 ## 2. Fundamentos do Design System
+
 A ideia principal que norteia o Design System proposto é o conceito de uma pizzaria caseira que está expandindo mas que não quer perder sua cara familiar, acolhedora e de excelente qualidade. Para isso, foram definidos alguns fundamentos apresentados a seguir.
 
 ### 2.1 Princípios de Design (filosofia)
+
 - Apetitoso: Cada elemento visual deve despertar o desejo pela pizza.
 - Acolhedor: Fazer o cliente sentir-se em casa, mesmo online.
 - Intuitivo: A navegação e os fluxos devem ser tão fáceis quanto pegar uma fatia.
@@ -30,97 +37,141 @@ A ideia principal que norteia o Design System proposto é o conceito de uma pizz
 - Escalável: Construído para crescer junto com a paixão pela pizza.
 
 ### 2.2. Tom de voz (comunicação)
+
 - Acolhedor e Convidativo: Linguagem informal, mas respeitosa. Ex: "Humm, que delícia!" em vez de "Item adicionado ao carrinho".
 - Claro e Direto: Especialmente para ações críticas (checkout, confirmação de pedido).
 - Apaixonado por Pizza: Transparece o amor pelo produto. Frases como "Preparado com carinho" ou "Aqueça seu paladar".
 - Humor Sutil: Ocasionalmente, um trocadilho ou uma frase divertida, para manter a leveza.
 
 ### 2.3. Paletas de cores
+
 A ideia é usar cores quentes e apetitosas, mas com tons um pouco mais suaves e terrosos para manter o ar aconchegante, evitando cores vibrantes e "fast-food" demais.
 
 <img src="images/imagem2.png" alt="Paleta" width="500">
 
 Primária (Massa Fresca)
+
 - Humm_Red (#E03C3C / R:224 G:60 B:60) - Um vermelho tomate, que remete à base da pizza e ao calor do forno. Forte, mas não agressivo.
 
-Secundária (Queijo Quente): 
+Secundária (Queijo Quente):
+
 - Queijo_Amarelo (#FFD700 / R:255 G:215 B:0) - Um amarelo mostarda/ouro, que lembra o queijo derretido e a borda crocante.
 - Acento (Azeitona): Azeitona_Verde (#4CAF50 / R:76 G:175 B:80) - Um verde folha de manjericão/azeitona, para botões de sucesso ou pequenos destaques.
 
 Neutros (Base de Pedra):
+
 - Pedra_Clara (#F5C5CC / R:245 G:245 B:245) - Para fundos e superfícies claras.
 - Pedra_Escura (#424242 / R:66 G:66 B:66) - Para textos principais e ícones.
 
 Feedback:
+
 - Sucesso: Manjericão_Sucesso (#66BB6A / R:102 G:187 B:106) - Um verde vibrante, mas natural.
 - Erro: Pimenta_Vermelha (#EF5350 / R:239 G:83 B:80) - Um vermelho alerta, porém amigável.
 - Aviso: Aviso_Cheddar (#FFA726 / R:255 G:167 B:38) - Um laranja que lembra queijo cheddar, para alertas.
 
 ## 2.4. Tipografia
+
 Mistura uma fonte mais "artesanal" para títulos com uma legível e moderna para o corpo do texto.
 
 - Fonte de Títulos (Display): `Handlee` (ou similar) - Uma fonte com um toque de "escrita à mão" para títulos de seções, promoções e o logo. Transmite a personalização e o cuidado artesanal.
-<img src="images/imagem3-rev.png" alt="Display" width="400">
+  <img src="images/imagem3-rev.png" alt="Display" width="400">
 
 - Fonte de Corpo (Body/Text): `Inter` ou `Roboto` - Fontes sans-serif modernas, limpas e altamente legíveis para o corpo do texto, descrições de produtos, botões e formulários. Garante profissionalismo e boa leitura em qualquer tamanho.
 
 <img src="images/imagem4.PNG" alt="Body" width="400">
 
 ## 2.5. Ícones
+
 Estilo: Ícones de linha, com um toque levemente arredondado, sem serem excessivamente "flat". Podem ter um preenchimento sutil quando em estado ativo. Remetem a um desenho feito à mão.
 
 Conteúdo: Ícones relacionados a comida (pizza, fatia, garfo, faca), entrega (moto, caixa), usuário (chapéu de chef, cliente feliz), e navegação padrão (carrinho, home, configurações).
 
 ## 2.6. Componentes essenciais
+
 a) Botões (`<Button>`):
+
 - Estilo: Levemente arredondados, não totalmente retos. Sombra sutil ao passar o mouse (hover) para dar profundidade.
 
 b) Cards (`<Card>`):
+
 - Estilo: Borda arredondada (raio de 8-12px), com uma sombra discreta para dar a sensação de que flutua levemente. Fundo Pedra_Clara.
 - Uso: Para itens do cardápio, promoções, informações de contato.
 
 c) Inputs de Formulário (`<Input>`, `<Select>`, `<Textarea>`):
+
 - Estilo: Borda suave (Pedra_Média), levemente arredondada, com fundo Pedra_Clara. Ao focar (focus), a borda pode mudar para Humm_Red ou Queijo_Amarelo para indicar o campo ativo.
 - Validação: Borda Pimenta_Vermelha para erro, Manjericão_Sucesso para sucesso.
 - Labels: Acima do campo, em Pedra_Escura.
 
 d) Mensagens de Feedback/Alertas (`<Alert>`):
+
 - Estilo: Retângulo com bordas arredondadas, ícone correspondente à esquerda (sucesso, erro, aviso) e texto em Pedra_Escura.
 - Cores de Fundo: Manjericão_Sucesso (verde), Pimenta_Vermelha (vermelho), Aviso_Cheddar (laranja) - com uma opacidade para não ser muito forte, ou em tons mais pastéis dessas cores.
 
 e) Navegação (`<NavLink>`, `<Tabs>)`:
+
 - Estilo: Link de navegação (Pedra_Escura). Ao passar o mouse (hover), underline sutil ou mudança para Humm_Red. Item ativo com Humm_Red e talvez um marcador discreto.
 - Uso: Menu principal (categorias), abas de perfil do usuário.
 
 ## 3. Estilo arquitetural
-Em breve!
+
+### 3.1. Contexto e Desafios
+
+Com o crescimento do **Pizza Delivery**, o sistema original passou a apresentar sérios problemas de desempenho e confiabilidade que impactavam diretamente a **experiência do usuário** e a **consistência da interface**:
+
+- Muitos pedidos chegavam em horários de pico e a aplicação **trava ou caía**, comprometendo a jornada do cliente.
+- A aplicação **demorava para atualizar** o status dos pedidos, gerando dúvidas e insegurança visual na tela.
+- **Atrasos** entre o recebimento do pedido e o envio à cozinha afetavam o fluxo operacional.
+- Entregadores recebiam **informações incompletas**, dificultando a entrega e prejudicando a percepção de eficiência do sistema.
+- **Lentidão** na extração de relatórios tornava difícil acompanhar indicadores e ajustar o design de experiência baseado em dados.
+
+Esses problemas revelaram uma **arquitetura monolítica e pouco escalável**, que não apenas limitava o desempenho, mas também a capacidade do **Design System** de se propagar de forma unificada entre diferentes partes do produto.
+
+Assim, a reestruturação técnica, com adoção de **microsserviços** e **arquitetura em três camadas**, torna-se essencial para sustentar o crescimento visual e funcional do sistema. O Design System depende dessa base sólida para garantir consistência de interface, performance fluida e integração contínua com os múltiplos serviços da aplicação.
+
+### 3.2. Estilo Arquitetural Adotado: Microsserviços
+
+Para superar essas limitações, o novo desenho segue o **estilo arquitetural de microsserviços**, no qual o sistema é dividido em serviços independentes, cada um responsável por um domínio específico.
+
+**Benefícios principais:**
+
+1. **Escalabilidade independente:** cada serviço pode ser dimensionado conforme a demanda.
+2. **Resiliência:** falhas localizadas não afetam todo o sistema.
+3. **Agilidade de evolução:** novos recursos podem ser adicionados sem comprometer outros módulos.
+4. **Integração simplificada:** comunicação via APIs REST ou mensageria (RabbitMQ, Kafka).
 
 ---
 
 ## 4. Componentização e domínio
+
 Em breve!
 
 ---
 
 ## 5. Padrões de comunicação
-Em breve! 
+
+Em breve!
 
 ---
 
 ## 6. Persistência e banco de dados
+
 Em breve!
 
 ---
 
 ## 7. Escalabilidade e performance
+
 Em breve!
 
 ---
 
 ## Segurança
+
 Em breve!
 
 ---
 
 ## Observabilidade
+
 Em breve!
