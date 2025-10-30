@@ -254,7 +254,7 @@ A observabilidade é crucial em um ambiente de microsserviços distribuídos par
 
 Nossa estratégia de observabilidade se baseia em três pilares: Traces, Métricas e Logs.
 
-9.1. Rastreamento Distribuído (Traces)
+**9.1. Rastreamento Distribuído (Traces)
 O rastreamento distribuído é essencial para visualizar o fluxo de uma requisição através de múltiplos microsserviços, identificando gargalos e falhas.
 
 Ferramenta: OpenTelemetry será usado para instrumentar todos os microsserviços (Logistica Pedidos Service, Roteirizacao Service, Entregadores Service) e o API Gateway.
@@ -271,6 +271,60 @@ Backend de Traces: Um backend como Jaeger ou Zipkin será utilizado para coletar
 
 Dashboard de Traces (Exemplo no Jaeger/Zipkin)
 Um dashboard de traces permite buscar requisições por ID, serviço ou duração, visualizando o "caminho" da requisição.
+
+**9.2 Métricas
+
+![OBSERVABILIDADE2](https://github.com/user-attachments/assets/f5677a1c-29c7-494b-8ba6-66e2c963d75d)
+
+Métricas quantificam o desempenho e a saúde dos componentes do sistema, alertando sobre problemas em tempo real.
+
+Coleta: Prometheus será o sistema principal para coletar e armazenar métricas.
+
+Microsserviços: Cada microsserviço exporá um endpoint /actuator/prometheus (com Spring Boot Actuator) com métricas como latência de requisições, taxa de erro, uso de CPU/memória, contagem de requisições.
+
+Kubernetes: Métricas do Kubernetes (uso de pods, nodes, rede) serão coletadas para monitorar a infraestrutura subjacente.
+
+Kafka: Métricas de brokers e topics do Apache Kafka (lag de consumidor, taxa de produção/consumo).
+
+Bancos de Dados: Métricas de desempenho do PostgreSQL e MongoDB (uso de conexões, queries por segundo, latência).
+
+Análise: As métricas coletadas ajudarão a identificar:
+
+Serviços sobrecarregados (problema de horários de pico).
+
+Aumento na taxa de erros ou latência.
+
+Vazamentos de memória ou CPU alta.
+
+Alertas: Regras de alerta no Prometheus (Alertmanager) notificarão as equipes sobre anomalias.
+
+Dashboard de Métricas (Exemplo no Grafana)
+Um dashboard de métricas com Grafana pode fornecer uma visão consolidada da saúde do sistema.
+
+**9.3 Logs
+
+![OBSERVABILIDADE3](https://github.com/user-attachments/assets/846abcd5-d962-441f-8187-b1a6e1a06f56)
+
+Logs fornecem informações detalhadas sobre eventos específicos que ocorrem dentro dos serviços.
+
+Formato: Todos os microsserviços emitirão logs estruturados (JSON), facilitando a análise e a busca programática.
+
+Centralização: Um sistema de centralização de logs (como ELK Stack - Elasticsearch, Logstash, Kibana ou Loki/Grafana) será usado para coletar, armazenar e consultar logs de todos os serviços em um único lugar.
+
+Contexto de Traces: Logs incluirão IDs de trace e span do OpenTelemetry, permitindo correlacionar logs com traces distribuídos.
+
+Análise: Logs são cruciais para:
+
+Depurar problemas específicos e entender a sequência de eventos que levaram a uma falha.
+
+Analisar padrões de uso ou comportamento de usuário.
+
+Auditar ações críticas no sistema.
+
+Dashboard de Logs (Exemplo no Kibana/Grafana Loki)
+Um dashboard de logs permite pesquisar logs por serviço, nível, trace ID ou conteúdo da mensagem.
+
+
 
 ## 10\. Repositório Modelo
 
