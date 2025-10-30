@@ -144,7 +144,188 @@ Para superar essas limitações, o novo desenho segue o **estilo arquitetural de
 
 ## 4. Componentização e domínio
 
-Em breve!
+Esta seção consolida os três diagramas fornecidos (`images/DiagramaFoodExpress.jpeg`, `images/DiagramaDeClasses.jpeg`, `images/DiagramaDeCamadas.jpeg`) em um blueprint único para implementação. Abaixo estão as fronteiras de componentes, o modelo de domínio e os contratos que conectam tudo.
+
+### 4.1. Componentização por camadas e serviços
+
+- **Camada de Apresentação**: `Web App` e `Mobile App (React Native)` consumindo APIs via HTTPS. Utilizam o Design System em `design-system-components`.
+- **Camada de API**: `API Gateway` centraliza roteamento, CORS, rate limit e circuit breaker. Integra com `Keycloak` para autenticação (login/refresh/roles).
+- **Camada de Aplicação (Domínio)**: três microsserviços principais, cada um com banco próprio:
+  - **Logistica Pedidos Service**: CRUD de pedidos, agregação do carrinho e orquestração do fluxo do pedido. Publica evento "PedidoCriado".
+  - **Logistica Entregadores Service**: gestão de entregadores e disponibilidade. Publica "EntregadorDisponibilidadeAtualizada".
+  - **Logistica Roteirizacao Service**: calcula/atualiza rotas e status de entrega. Consome eventos e usa MongoDB para trilhas/geo.
+- **Camada de Mensageria**: `Apache Kafka` para integração assíncrona entre serviços.
+- **Camada de Dados**: `PostgreSQL` (transacional para Pedidos/Entregadores), `MongoDB` (documentos de rotas/telemetria) e `Cache` (Redis) para leituras rápidas e sessões.
+
+Relacionamentos principais (do diagrama de camadas):
+
+- Apps → API Gateway → Serviços (roteamento protegido pelo Keycloak)
+- Pedidos/Entregadores → PostgreSQL | Roteirização → MongoDB | Todos → Cache
+- Eventos: Pedidos publica → Kafka; Roteirização consome; Entregadores publica disponibilidade → Pedidos consome para alocar.
+
+### 4.2. Domínio e agregados (Diagrama de Classes)
+
+- **Agregado Pedido** (raiz: `Pedido`)
+  - Entidades: `ItemPedido`, `Cliente` (referência), `Entregador` (referência), `Rota` (referência)
+  - Atributos chave: `status: StatusPedido`, `valorTotal: double`, `dataHora: DateTime`, `tipoPagamento: TipoPagamento`
+  - Regras: cálculo de `valorTotal`; transições de `StatusPedido` {NOVO, PREPARACAO, EM_ROTA, ENTREGUE, CANCELADO}
+- **Agregado Entregador** (raiz: `Entregador`)
+  - Atributos: `cpf`, `veiculo`, `isDisponivel`
+  - Eventos de domínio: disponibilidade mudada
+- **Agregado Rota** (raiz: `Rota`)
+  - Atributos: `pedidoId`, `entregadorId`, `enderecoDestino`, `tempoEstimado`, `status`, `ultimaLocalizacao: PontoGeografico`
+  - Persistência documental (MongoDB) para histórico de pontos/geometria
+- **Objetos de Valor**: `Endereco`, `PontoGeografico`
+- **Enums**: `StatusPedido`, `TipoPagamento`
+
+### 4.3. Contratos REST (principais)
+
+- **Pedidos API**
+  - POST `/pedidos`
+    - Request:
+
+```json
+{
+  "clienteId": 123,
+  "itens": [{ "nome": "Pizza Calabresa", "preco": 49.9, "quantidade": 1 }],
+  "tipoPagamento": "CARTAO",
+  "enderecoEntrega": {
+    "logradouro": "Rua A",
+    "numero": "10",
+    "cidade": "BH",
+    "uf": "MG",
+    "cep": "00000-000"
+  }
+}
+```
+
+    - Response 201:
+
+```json
+{ "pedidoId": 987, "status": "NOVO" }
+```
+
+- GET `/pedidos/{id}` → detalhes do pedido
+- PATCH `/pedidos/{id}/status` → transições válidas (PREPARACAO → EM_ROTA → ENTREGUE)
+
+- **Entregadores API**
+
+  - POST `/entregadores` (cadastro)
+  - PATCH `/entregadores/{id}/disponibilidade` { "isDisponivel": true }
+
+- **Roteirização API**
+  - POST `/rotas` { "pedidoId": 987, "entregadorId": 55 }
+  - GET `/rotas/{id}` → progresso e ETA
+
+Autorização: Bearer Token (Keycloak). Scopes sugeridos: `pedidos:write`, `pedidos:read`, `entregadores:write`, `roteirizacao:write`.
+
+### 4.4. Eventos assíncronos (Kafka)
+
+- Tópico `pedidos.novos` – evento "PedidoCriado"
+
+```json
+{
+  "pedidoId": 987,
+  "clienteId": 123,
+  "valorTotal": 79.8,
+  "enderecoEntrega": { "cep": "00000-000" },
+  "dataHora": "2025-10-30T12:00:00Z"
+}
+```
+
+- Tópico `entregadores.disponibilidade` – "EntregadorDisponibilidadeAtualizada"
+
+```json
+{ "entregadorId": 55, "isDisponivel": true, "dataHora": "2025-10-30T12:01:00Z" }
+```
+
+- Tópico `rotas.status` – "StatusRotaAtualizado"
+
+```json
+{
+  "rotaId": "r-123",
+  "pedidoId": 987,
+  "status": "EM_ROTA",
+  "ultimaLocalizacao": { "latitude": -19.9, "longitude": -43.9 }
+}
+```
+
+Consumidores/Produtores (do diagrama):
+
+- Pedidos → produz `pedidos.novos`
+- Roteirização → consome `pedidos.novos`, produz `rotas.status`
+- Entregadores → produz `entregadores.disponibilidade`; Pedidos consome para alocar entregador
+
+### 4.5. Modelos de dados (resumo)
+
+- PostgreSQL (Pedidos/Entregadores)
+
+```sql
+CREATE TABLE pedidos (
+  id BIGSERIAL PRIMARY KEY,
+  cliente_id BIGINT NOT NULL,
+  entregador_id BIGINT NULL,
+  status VARCHAR(20) NOT NULL,
+  valor_total NUMERIC(10,2) NOT NULL,
+  tipo_pagamento VARCHAR(20) NOT NULL,
+  data_hora TIMESTAMP NOT NULL,
+  endereco_json JSONB NOT NULL
+);
+
+CREATE TABLE itens_pedido (
+  id BIGSERIAL PRIMARY KEY,
+  pedido_id BIGINT REFERENCES pedidos(id) ON DELETE CASCADE,
+  nome TEXT NOT NULL,
+  preco NUMERIC(10,2) NOT NULL,
+  quantidade INT NOT NULL
+);
+
+CREATE TABLE entregadores (
+  id BIGSERIAL PRIMARY KEY,
+  nome TEXT NOT NULL,
+  cpf VARCHAR(14) UNIQUE NOT NULL,
+  veiculo TEXT,
+  is_disponivel BOOLEAN NOT NULL DEFAULT false
+);
+```
+
+- MongoDB (Roteirização)
+
+```json
+{
+  "_id": "r-123",
+  "pedidoId": 987,
+  "entregadorId": 55,
+  "status": "EM_ROTA",
+  "ultimaLocalizacao": { "lat": -19.9, "lng": -43.9 },
+  "pontos": [{ "t": "2025-10-30T12:05:00Z", "lat": -19.9, "lng": -43.9 }],
+  "tempoEstimadoMin": 18
+}
+```
+
+### 4.6. Mapa para o Design System (componentização de UI)
+
+- **Fluxo de Pedido**
+  - Listagem de Pizzas: `Card`, `Button`, `Badge`, `Tabs`
+  - Carrinho/Checkout: `Table`/`List`, `Input`, `Select`, `Alert`, `Stepper`
+  - Confirmação: `Result`, `Tag` de status (NOVO, PREPARACAO...)
+- **Acompanhamento de Entrega**
+  - Tela de Rota: `MapContainer` (wrapper), `Card` com ETA, `Progress`, `Tag`
+- **Área do Entregador**
+  - Disponibilidade: `Switch`, `Badge`, `Alert`
+- **Autenticação**
+  - Login/Logout: `Form`, `Input`, `Button`, mensagens padronizadas de erro/sucesso
+
+Boas práticas de UX para consumo das APIs acima:
+
+- Otimizar a leitura com Cache (ex.: status do pedido) e WebSocket/Server-Sent Events opcional para atualizações de rota.
+- Tratar estados: `loading`, `empty`, `error`, `success` com componentes visuais consistentes.
+
+Referências visuais:
+
+- Diagrama de camadas: `images/DiagramaDeCamadas.jpeg`
+- Diagrama de classes: `images/DiagramaDeClasses.jpeg`
+- Visão consolidada: `images/DiagramaFoodExpress.jpeg`
 
 ---
 
