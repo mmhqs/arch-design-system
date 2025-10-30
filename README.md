@@ -164,40 +164,41 @@ Em breve!
 
 Esta seção detalha as estratégias adotadas para garantir que o sistema escale em performance, sustentando o crescimento do produto e a experiência de usuário definida pelo Design System.
 
-7.1. Estratégias de Escalabilidade Baseadas em Microsserviços
-A arquitetura de microsserviços resolve os gargalos do antigo sistema ao permitir que cada parte da aplicação cresça de forma independente.
+**7.1. Estratégias de Escalabilidade Baseadas em Microsserviços
+A arquitetura de microsserviços resolve os gargalos do antigo sistema ao permitir que cada parte da aplicação cresça de forma independente.**
 
 a) Escalabilidade Horizontal por Serviço: Com isso, podemos escalar apenas os serviços mais demandados.
 
-Solução: Utilizando orquestradores de contêineres como Kubernetes, podemos aumentar automaticamente o número de instâncias (réplicas) apenas desses dois serviços. Enquanto isso, o Serviço de Cardápio ou o Serviço de Relatórios, que possuem uma carga menor, continuam operando com menos recursos. Isso otimiza os custos e direciona o poder computacional para onde ele é realmente necessário, evitando as quedas e travamentos do sistema antigo.
+- Solução: Utilizando orquestradores de contêineres como Kubernetes, podemos aumentar automaticamente o número de instâncias (réplicas) apenas desses dois serviços. Enquanto isso, o Serviço de Cardápio ou o Serviço de Relatórios, que possuem uma carga menor, continuam operando com menos recursos. Isso otimiza os custos e direciona o poder computacional para onde ele é realmente necessário, evitando as quedas e travamentos do sistema antigo.
 
 b) Resiliência e Isolamento de Falhas: A falha em um componente não compromete mais todo o sistema, garantindo maior tempo de atividade.
 
-Solução: No modelo de microsserviços, essa lentidão fica contida. Clientes podem continuar navegando no cardápio, realizando pedidos e pagando sem qualquer impacto. Essa resiliência é crucial para manter a confiança do usuário, pois a funcionalidade principal permanece sempre disponível.
+- Solução: No modelo de microsserviços, essa lentidão fica contida. Clientes podem continuar navegando no cardápio, realizando pedidos e pagando sem qualquer impacto. Essa resiliência é crucial para manter a confiança do usuário, pois a funcionalidade principal permanece sempre disponível.
 
 c) Banco de Dados por Serviço: Cada microsserviço possui seu próprio banco de dados, o que elimina a contenção e otimiza as consultas.
 
-Solução: Agora, o Serviço de Pedidos utiliza um banco de dados transacional (como PostgreSQL) otimizado para escrita e leitura rápidas, enquanto o Serviço de Relatórios pode usar um banco de dados analítico ou uma réplica de leitura. Essa separação garante que operações pesadas de um serviço não degradem a performance dos outros, tornando a experiência do cliente fluida e sem interrupções.
+- Solução: Agora, o Serviço de Pedidos utiliza um banco de dados transacional (como PostgreSQL) otimizado para escrita e leitura rápidas, enquanto o Serviço de Relatórios pode usar um banco de dados analítico ou uma réplica de leitura. Essa separação garante que operações pesadas de um serviço não degradem a performance dos outros, tornando a experiência do cliente fluida e sem interrupções.
 
-7.2. Táticas de Otimização de Performance
-Além da arquitetura, implementamos táticas específicas para garantir um tempo de resposta mínimo e uma interface ágil.
+**7.2. Táticas de Otimização de Performance
+Além da arquitetura, implementamos táticas específicas para garantir um tempo de resposta mínimo e uma interface ágil.**
 
 a) Uso Intensivo de Cache: Para dados que não mudam com frequência, o cache é a principal ferramenta para reduzir a latência.
 
 b) Comunicação Assíncrona com Filas de Mensagens: Para processos que não precisam de uma resposta imediata, utilizamos um sistema de mensageria (como RabbitMQ ou Kafka).
 
-Solução: Quando o cliente finaliza um pedido, o sistema responde imediatamente com "Pedido recebido com sucesso!". Em paralelo, uma mensagem é enviada a uma fila. O Serviço de Cozinha e o Serviço de Notificações consomem essa mensagem de forma assíncrona para processar o pedido e atualizar o status para o cliente. Isso cria uma experiência não-bloqueante e garante que nenhuma informação seja perdida, mesmo em horários de pico.
+- Solução: Quando o cliente finaliza um pedido, o sistema responde imediatamente com "Pedido recebido com sucesso!". Em paralelo, uma mensagem é enviada a uma fila. O Serviço de Cozinha e o Serviço de Notificações consomem essa mensagem de forma assíncrona para processar o pedido e atualizar o status para o cliente. Isso cria uma experiência não-bloqueante e garante que nenhuma informação seja perdida, mesmo em horários de pico.
 
 c) Content Delivery Network (CDN) para Ativos do Design System: A velocidade de carregamento da interface é crucial. Todos os ativos visuais do Design System são distribuídos globalmente.
 
-Solução: Imagens de pizzas, fontes, ícones e arquivos de estilo são entregues por uma CDN. Isso significa que os arquivos são baixados do servidor mais próximo do cliente, reduzindo drasticamente o tempo de carregamento da página e garantindo que a primeira impressão seja rápida e positiva.
+- Solução: Imagens de pizzas, fontes, ícones e arquivos de estilo são entregues por uma CDN. Isso significa que os arquivos são baixados do servidor mais próximo do cliente, reduzindo drasticamente o tempo de carregamento da página e garantindo que a primeira impressão seja rápida e positiva.
 
-7.3. Impacto na Experiência do Usuário e no Design System
-A arquitetura de alta performance é o motor que permite ao Design System brilhar. De nada adianta ter componentes visualmente consistentes se eles demoram para carregar ou apresentam dados desatualizados.
+**7.3. Impacto na Experiência do Usuário e no Design System**
 
-Consistência e Confiança: Um sistema rápido e que atualiza o status dos pedidos em tempo real reforça a confiança do cliente.
+- A arquitetura de alta performance é o motor que permite ao Design System brilhar. De nada adianta ter componentes visualmente consistentes se eles demoram para carregar ou apresentam dados desatualizados.
 
-Fluidez na Navegação: O cache e a CDN garantem que a navegação entre as páginas de pizza, a montagem do pedido e o checkout ocorra sem engasgos, cumprindo o princípio de design.
+- Consistência e Confiança: Um sistema rápido e que atualiza o status dos pedidos em tempo real reforça a confiança do cliente.
+
+- Fluidez na Navegação: O cache e a CDN garantem que a navegação entre as páginas de pizza, a montagem do pedido e o checkout ocorra sem engasgos, cumprindo o princípio de design.
 
 ---
 
