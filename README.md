@@ -150,7 +150,45 @@ Em breve!
 
 ## 5. Padrões de comunicação
 
-Em breve!
+Com certeza\! Vamos estruturar o tópico "5. Padrões de Comunicação" e incluir um diagrama para ilustrar como os diferentes padrões interagem na arquitetura do FoodExpress.
+
+-----
+
+## 5\. Padrões de Comunicação
+
+Em uma arquitetura de microsserviços, a comunicação entre os componentes é um aspecto crítico para a resiliência, escalabilidade e performance do sistema. No **FoodExpress**, utilizamos uma combinação de padrões de comunicação síncronos e assíncronos para otimizar a interação entre os serviços.
+
+### 5.1. Comunicação Síncrona (API REST)
+
+  * **Padrão:** **API REST** (Representational State Transfer) via **HTTP/S**.
+  * **Utilização:**
+      * **Cliente $\leftrightarrow$ API Gateway:** Todas as interações do Frontend (Web App e Mobile App) com o Backend são feitas através do API Gateway usando REST.
+      * **API Gateway $\leftrightarrow$ Microsserviços:** O Gateway roteia as requisições REST para os microsserviços de destino.
+      * **Microsserviço $\leftrightarrow$ Microsserviço (consultas pontuais):** Para operações que exigem uma resposta imediata e direta (ex: Logistica Roteirizacao Service consultando Logistica Entregadores Service para a disponibilidade de um entregador em tempo real), um microsserviço pode chamar outro via REST.
+  * **Características:**
+      * Requisição-resposta imediata.
+      * Acoplamento temporal (o chamador espera pela resposta do chamado).
+      * Ideal para consultas e operações que precisam de feedback instantâneo.
+  * **Desafios:** Pode introduzir latência e pontos de falha em cascata se não gerenciado com padrões de resiliência (ex: Circuit Breaker).
+
+### 5.2. Comunicação Assíncrona (Mensageria)
+
+  * **Padrão:** **Mensageria** via **Apache Kafka**.
+  * **Utilização:**
+      * **Publicação de Eventos:** Microsserviços publicam eventos para notificar outros serviços sobre mudanças de estado (ex: Logistica Pedidos Service publica "Pedido Criado", "Status do Pedido Atualizado").
+      * **Consumo de Eventos:** Microsserviços subscrevem a tópicos para reagir a eventos relevantes (ex: Logistica Roteirizacao Service consome "Pedido Criado" para iniciar o processo de roteirização).
+  * **Características:**
+      * Desacoplamento temporal (o chamador não espera pela resposta e continua sua execução).
+      * Resiliência a falhas (mensagens são persistidas e podem ser reprocessadas).
+      * Escalabilidade (fácil adicionar novos consumidores sem afetar o publicador).
+      * Permite a implementação de arquiteturas orientadas a eventos e real-time updates (resolvendo a lentidão de atualização de status do pedido).
+  * **Desafios:** Pode introduzir complexidade na garantia da ordem dos eventos e na idempotência dos consumidores.
+
+### Diagrama de Padrões de Comunicação
+
+Este diagrama ilustra o fluxo de comunicação síncrona e assíncrona entre os componentes principais do FoodExpress.
+
+<img src="images/comunicação.png" alt="Estruturação do repositório" width="500">
 
 ---
 
