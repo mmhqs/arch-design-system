@@ -148,12 +148,6 @@ Em breve!
 
 ---
 
-## 5. Padrões de comunicação
-
-Com certeza\! Vamos estruturar o tópico "5. Padrões de Comunicação" e incluir um diagrama para ilustrar como os diferentes padrões interagem na arquitetura do FoodExpress.
-
------
-
 ## 5\. Padrões de Comunicação
 
 Em uma arquitetura de microsserviços, a comunicação entre os componentes é um aspecto crítico para a resiliência, escalabilidade e performance do sistema. No **FoodExpress**, utilizamos uma combinação de padrões de comunicação síncronos e assíncronos para otimizar a interação entre os serviços.
