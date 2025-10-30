@@ -211,3 +211,16 @@ Em breve!
 ## Observabilidade
 
 Em breve!
+
+## 10\. Repositório Modelo
+
+A organização do código-fonte segue o princípio da independência dos microsserviços.
+
+  * `/logistica-api-gateway`
+  * `/logistica-pedidos-service`
+  * `/logistica-roteirizacao-service`
+  * `/logistica-entregadores-service`
+  * `/logistica-infra` (Arquivos de Terraform, K8s, Helm)
+  * `/design-system-components` (Repositório do Frontend/Design System) - Contém a "fábrica de componentes" para as aplicações React/React Native, garantindo a consistência visual.
+
+  <img src="images/repo.png" alt="Estruturação do repositório" width="500">
