@@ -64,7 +64,7 @@ Mistura uma fonte mais "artesanal" para títulos com uma legível e moderna para
 
 - Fonte de Corpo (Body/Text): `Inter` ou `Roboto` - Fontes sans-serif modernas, limpas e altamente legíveis para o corpo do texto, descrições de produtos, botões e formulários. Garante profissionalismo e boa leitura em qualquer tamanho.
 
-<img src="images/imagem4.png" alt="Body" width="400">
+<img src="images/imagem4.PNG" alt="Body" width="400">
 
 ## 2.5. Ícones
 Estilo: Ícones de linha, com um toque levemente arredondado, sem serem excessivamente "flat". Podem ter um preenchimento sutil quando em estado ativo. Remetem a um desenho feito à mão.
