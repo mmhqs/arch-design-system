@@ -60,7 +60,7 @@ Feedback:
 Mistura uma fonte mais "artesanal" para títulos com uma legível e moderna para o corpo do texto.
 
 - Fonte de Títulos (Display): `Handlee` (ou similar) - Uma fonte com um toque de "escrita à mão" para títulos de seções, promoções e o logo. Transmite a personalização e o cuidado artesanal.
-<img src="images/imagem3.png" alt="Display" width="400">
+<img src="images/imagem3-rev.png" alt="Display" width="400">
 
 - Fonte de Corpo (Body/Text): `Inter` ou `Roboto` - Fontes sans-serif modernas, limpas e altamente legíveis para o corpo do texto, descrições de produtos, botões e formulários. Garante profissionalismo e boa leitura em qualquer tamanho.
 
