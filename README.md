@@ -208,9 +208,31 @@ Em breve!
 
 ---
 
-## Observabilidade
+## 9. Observabilidade
 
-Em breve!
+![OBSERVABILIDADE](https://github.com/user-attachments/assets/9d05ee64-072e-4c22-9d75-88cdd05b5316)
+
+A observabilidade é crucial em um ambiente de microsserviços distribuídos para diagnosticar problemas, otimizar o desempenho e garantir a confiabilidade da aplicação FoodExpress. Ela permite que as equipes compreendam o comportamento interno do sistema a partir de seus dados de saída.
+
+Nossa estratégia de observabilidade se baseia em três pilares: Traces, Métricas e Logs.
+
+9.1. Rastreamento Distribuído (Traces)
+O rastreamento distribuído é essencial para visualizar o fluxo de uma requisição através de múltiplos microsserviços, identificando gargalos e falhas.
+
+Ferramenta: OpenTelemetry será usado para instrumentar todos os microsserviços (Logistica Pedidos Service, Roteirizacao Service, Entregadores Service) e o API Gateway.
+
+Funcionalidade: Cada requisição de usuário gerará um trace que conectará as operações realizadas em cada serviço. Isso permite:
+
+Visualizar a latência total da requisição.
+
+Identificar qual serviço ou operação está contribuindo mais para o tempo de resposta.
+
+Detectar e isolar falhas em serviços específicos.
+
+Backend de Traces: Um backend como Jaeger ou Zipkin será utilizado para coletar, armazenar e visualizar os traces.
+
+Dashboard de Traces (Exemplo no Jaeger/Zipkin)
+Um dashboard de traces permite buscar requisições por ID, serviço ou duração, visualizando o "caminho" da requisição.
 
 ## 10\. Repositório Modelo
 
