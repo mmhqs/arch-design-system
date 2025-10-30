@@ -22,7 +22,20 @@ Uma nova arquitetura foi pensada para o sistema, de modo a atender os desafios a
 ## 2. Fundamentos do Design System
 A ideia principal que norteia o Design System proposto é o conceito de uma pizzaria caseira que está expandindo mas que não quer perder sua cara familiar, acolhedora e de excelente qualidade. Para isso, foram definidos alguns fundamentos apresentados a seguir.
 
-### 2.1. Paletas de cores
+### 2.1 Princípios de Design (filosofia)
+- Apetitoso: Cada elemento visual deve despertar o desejo pela pizza.
+- Acolhedor: Fazer o cliente sentir-se em casa, mesmo online.
+- Intuitivo: A navegação e os fluxos devem ser tão fáceis quanto pegar uma fatia.
+- Consistente: Manter a mesma experiência em todos os pontos de contato.
+- Escalável: Construído para crescer junto com a paixão pela pizza.
+
+### 2.2. Tom de voz (comunicação)
+- Acolhedor e Convidativo: Linguagem informal, mas respeitosa. Ex: "Humm, que delícia!" em vez de "Item adicionado ao carrinho".
+- Claro e Direto: Especialmente para ações críticas (checkout, confirmação de pedido).
+- Apaixonado por Pizza: Transparece o amor pelo produto. Frases como "Preparado com carinho" ou "Aqueça seu paladar".
+- Humor Sutil: Ocasionalmente, um trocadilho ou uma frase divertida, para manter a leveza.
+
+### 2.3. Paletas de cores
 A ideia é usar cores quentes e apetitosas, mas com tons um pouco mais suaves e terrosos para manter o ar aconchegante, evitando cores vibrantes e "fast-food" demais.
 
 <img src="images/imagem2.png" alt="Paleta" width="500">
@@ -35,14 +48,46 @@ Secundária (Queijo Quente):
 - Acento (Azeitona): Azeitona_Verde (#4CAF50 / R:76 G:175 B:80) - Um verde folha de manjericão/azeitona, para botões de sucesso ou pequenos destaques.
 
 Neutros (Base de Pedra):
-- Pedra_Clara (#F5F5F5 / R:245 G:245 B:245) - Para fundos e superfícies claras.
-- Pedra_Média (#CCCCCC / R:204 G:204 B:204) - Para bordas, divisores e textos mais discretos.
+- Pedra_Clara (#F5C5CC / R:245 G:245 B:245) - Para fundos e superfícies claras.
 - Pedra_Escura (#424242 / R:66 G:66 B:66) - Para textos principais e ícones.
 
-Feedback (Molho Secreto):
+Feedback:
 - Sucesso: Manjericão_Sucesso (#66BB6A / R:102 G:187 B:106) - Um verde vibrante, mas natural.
 - Erro: Pimenta_Vermelha (#EF5350 / R:239 G:83 B:80) - Um vermelho alerta, porém amigável.
 - Aviso: Aviso_Cheddar (#FFA726 / R:255 G:167 B:38) - Um laranja que lembra queijo cheddar, para alertas.
+
+## 2.4. Tipografia
+Mistura uma fonte mais "artesanal" para títulos com uma legível e moderna para o corpo do texto.
+
+- Fonte de Títulos (Display): `Handlee` (ou similar) - Uma fonte com um toque de "escrita à mão" para títulos de seções, promoções e o logo. Transmite a personalização e o cuidado artesanal.
+
+- Fonte de Corpo (Body/Text): `Inter` ou `Roboto` - Fontes sans-serif modernas, limpas e altamente legíveis para o corpo do texto, descrições de produtos, botões e formulários. Garante profissionalismo e boa leitura em qualquer tamanho.
+
+## 2.5. Ícones
+Estilo: Ícones de linha, com um toque levemente arredondado, sem serem excessivamente "flat". Podem ter um preenchimento sutil quando em estado ativo. Remetem a um desenho feito à mão.
+
+Conteúdo: Ícones relacionados a comida (pizza, fatia, garfo, faca), entrega (moto, caixa), usuário (chapéu de chef, cliente feliz), e navegação padrão (carrinho, home, configurações).
+
+## 2.6. Componentes essenciais
+a) Botões (<Button>):
+- Estilo: Levemente arredondados, não totalmente retos. Sombra sutil ao passar o mouse (hover) para dar profundidade.
+
+b) Cards (<Card>):
+- Estilo: Borda arredondada (raio de 8-12px), com uma sombra discreta para dar a sensação de que flutua levemente. Fundo Pedra_Clara.
+- Uso: Para itens do cardápio, promoções, informações de contato.
+
+c) Inputs de Formulário (<Input>, <Select>, <Textarea>):
+- Estilo: Borda suave (Pedra_Média), levemente arredondada, com fundo Pedra_Clara. Ao focar (focus), a borda pode mudar para Humm_Red ou Queijo_Amarelo para indicar o campo ativo.
+- Validação: Borda Pimenta_Vermelha para erro, Manjericão_Sucesso para sucesso.
+- Labels: Acima do campo, em Pedra_Escura.
+
+d) Mensagens de Feedback/Alertas (<Alert>):
+- Estilo: Retângulo com bordas arredondadas, ícone correspondente à esquerda (sucesso, erro, aviso) e texto em Pedra_Escura.
+- Cores de Fundo: Manjericão_Sucesso (verde), Pimenta_Vermelha (vermelho), Aviso_Cheddar (laranja) - com uma opacidade para não ser muito forte, ou em tons mais pastéis dessas cores.
+
+e) Navegação (<NavLink>, <Tabs>):
+- Estilo: Link de navegação (Pedra_Escura). Ao passar o mouse (hover), underline sutil ou mudança para Humm_Red. Item ativo com Humm_Red e talvez um marcador discreto.
+- Uso: Menu principal (categorias), abas de perfil do usuário.
 
 ## 3. Estilo arquitetural
 
